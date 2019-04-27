@@ -3,6 +3,7 @@
 namespace GraphServer;
 
 use GraphServer\Base\PoolQuery as BasePoolQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'pool' table.
@@ -16,5 +17,20 @@ use GraphServer\Base\PoolQuery as BasePoolQuery;
  */
 class PoolQuery extends BasePoolQuery
 {
+    /**
+     * Sorts the query on the current worker count.
+     *
+     * @param string $order
+     * @return BasePoolQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function orderByProgress($order = Criteria::ASC) {
+        return parent::withColumn('completed_count+in_progress_count', 'current_count')
+            ->orderBy('current_count', $order);
+    }
 
+    public function getActive() {
+        return parent::withColumn('completed_count+in_progress_count', 'current_count')
+            ->where('current_count < max_count or max_count = 0');
+
+    }
 }

@@ -2,10 +2,10 @@
 
 namespace GraphServer;
 
-use GraphServer\Base\GraphQuery as BaseGraphQuery;
+use GraphServer\Base\WorkerQuery as BaseWorkerQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'graph' table.
+ * Skeleton subclass for performing query and update operations on the 'worker' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use GraphServer\Base\GraphQuery as BaseGraphQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class GraphQuery extends BaseGraphQuery
+class WorkerQuery extends BaseWorkerQuery
 {
 
 }

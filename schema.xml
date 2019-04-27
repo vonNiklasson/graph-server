@@ -15,9 +15,11 @@
         <column name="completed_count"      type="integer"  required="true" defaultValue="0" />
         <column name="in_progress_count"    type="integer"  required="true" defaultValue="0" />
         <column name="dead_count"           type="integer"  required="true" defaultValue="0" />
+
+        <column name="max_count"            type="integer"  required="true" defaultValue="0" />
     </table>
 
-    <table name="graph" phpName="Graph">
+    <table name="worker" phpName="Worker">
         <column name="id"           type="integer"  required="true" primaryKey="true" autoIncrement="true"/>
         <column name="pool_id"      type="integer"  required="true"/>
         <column name="created_ts"   type="integer"  required="true" />
@@ -41,28 +43,28 @@
         <column name="average_eccentricity" type="decimal"  required="false" />
 
         <!-- Raw data based on the graph -->
-        <column name="node_id" type="integer" required="true"/>
-        <column name="edge_id" type="integer" required="true"/>
-        <column name="eccentricity_id" type="integer" required="true"/>
+        <column name="node_data_id"         type="integer" required="false"/>
+        <column name="edge_data_id"         type="integer" required="false"/>
+        <column name="eccentricity_data_id" type="integer" required="false"/>
 
-        <foreign-key foreignTable="pool" phpName="Pool" refPhpName="Graphs">
+        <foreign-key foreignTable="pool" phpName="Pool" refPhpName="Workers">
             <reference local="pool_id" foreign="id"/>
         </foreign-key>
 
-        <foreign-key foreignTable="graph_data" phpName="Nodes" refPhpName="Graph">
-            <reference local="node_id" foreign="id"/>
+        <foreign-key foreignTable="worker_data" phpName="Nodes" refPhpName="Worker">
+            <reference local="node_data_id" foreign="id"/>
         </foreign-key>
 
-        <foreign-key foreignTable="graph_data" phpName="Edges" refPhpName="Graph">
-            <reference local="edge_id" foreign="id"/>
+        <foreign-key foreignTable="worker_data" phpName="Edges" refPhpName="Worker">
+            <reference local="edge_data_id" foreign="id"/>
         </foreign-key>
 
-        <foreign-key foreignTable="graph_data" phpName="Eccentricity" refPhpName="Graph">
-            <reference local="eccentricity_id" foreign="id"/>
+        <foreign-key foreignTable="worker_data" phpName="Eccentricity" refPhpName="Worker">
+            <reference local="eccentricity_data_id" foreign="id"/>
         </foreign-key>
     </table>
 
-    <table name="graph_data" phpName="GraphData">
+    <table name="worker_data" phpName="WorkerData">
         <column name="id"   type="integer"      required="true" primaryKey="true" autoIncrement="true" />
         <column name="data" type="longvarchar"  required="false" />
     </table>

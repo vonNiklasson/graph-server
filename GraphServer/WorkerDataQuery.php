@@ -2,10 +2,10 @@
 
 namespace GraphServer;
 
-use GraphServer\Base\Graph as BaseGraph;
+use GraphServer\Base\WorkerDataQuery as BaseWorkerDataQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'graph' table.
+ * Skeleton subclass for performing query and update operations on the 'worker_data' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use GraphServer\Base\Graph as BaseGraph;
  * long as it does not already exist in the output directory.
  *
  */
-class Graph extends BaseGraph
+class WorkerDataQuery extends BaseWorkerDataQuery
 {
 
 }
