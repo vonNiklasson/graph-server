@@ -3,13 +3,31 @@
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="GraphServer">
 
+    <table name="pool" phpName="Pool">
+        <column name="id"           type="integer"  required="true" primaryKey="true" autoIncrement="true" />
+        <column name="node_count"   type="integer"  required="true" />
+
+        <column name="active"       type="boolean"  required="true" defaultValue="true" />
+
+        <column name="optimization" type="char"     required="true" defaultValue="combined" size="31" />
+
+        <!-- State count -->
+        <column name="completed_count"      type="integer"  required="true" defaultValue="0" />
+        <column name="in_progress_count"    type="integer"  required="true" defaultValue="0" />
+        <column name="dead_count"           type="integer"  required="true" defaultValue="0" />
+    </table>
+
     <table name="graph" phpName="Graph">
         <column name="id"           type="integer"  required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="pool_id"      type="integer"  required="true"/>
         <column name="created_ts"   type="integer"  required="true" />
         <column name="closed_ts"    type="integer"  required="false" />
 
         <!-- The current state of the object, whether it's in progress, done or dead -->
         <column name="state"        type="enum"     required="true" valueSet="in_progress,done,dead" defaultValue="in_progress" />
+
+        <!-- Which parameter to optimize on -->
+        <column name="optimization" type="char"     required="true" defaultValue="combined" size="31" />
 
         <!-- Basic data about the graph -->
         <column name="node_count"   type="integer"  required="false" />
@@ -26,6 +44,10 @@
         <column name="node_id" type="integer" required="true"/>
         <column name="edge_id" type="integer" required="true"/>
         <column name="eccentricity_id" type="integer" required="true"/>
+
+        <foreign-key foreignTable="pool" phpName="Pool" refPhpName="Graphs">
+            <reference local="pool_id" foreign="id"/>
+        </foreign-key>
 
         <foreign-key foreignTable="graph_data" phpName="Nodes" refPhpName="Graph">
             <reference local="node_id" foreign="id"/>
