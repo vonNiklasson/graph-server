@@ -3,5 +3,14 @@
         "vlucas/phpdotenv": "^2.4",
         "slim/slim": "^3.0",
         "propel/propel": "~2.0@dev"
+    },
+    "autoload": {
+        "classmap": [
+            "GraphServer/",
+            "backend/Pool/"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true
     }
 }
