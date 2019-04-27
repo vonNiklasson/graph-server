@@ -1,0 +1,47 @@
+<database name="default" defaultIdMethod="native"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="GraphServer">
+
+    <table name="graph" phpName="Graph">
+        <column name="id"           type="integer"  required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="created_ts"   type="integer"  required="true" />
+        <column name="closed_ts"    type="integer"  required="false" />
+
+        <!-- The current state of the object, whether it's in progress, done or dead -->
+        <column name="state"        type="enum"     required="true" valueSet="in_progress,done,dead" defaultValue="in_progress" />
+
+        <!-- Basic data about the graph -->
+        <column name="node_count"   type="integer"  required="false" />
+        <column name="edge_count"   type="integer"  required="false" />
+
+        <!-- Advanced data about the graph -->
+        <column name="convergence_rate"     type="decimal"  required="false" />
+        <column name="energy_cost"          type="decimal"  required="false" />
+        <column name="edge_cost"            type="integer"  required="false" />
+        <column name="diameter"             type="integer"  required="false" />
+        <column name="average_eccentricity" type="decimal"  required="false" />
+
+        <!-- Raw data based on the graph -->
+        <column name="node_id" type="integer" required="true"/>
+        <column name="edge_id" type="integer" required="true"/>
+        <column name="eccentricity_id" type="integer" required="true"/>
+
+        <foreign-key foreignTable="graph_data" phpName="Nodes" refPhpName="Graph">
+            <reference local="node_id" foreign="id"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="graph_data" phpName="Edges" refPhpName="Graph">
+            <reference local="edge_id" foreign="id"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="graph_data" phpName="Eccentricity" refPhpName="Graph">
+            <reference local="eccentricity_id" foreign="id"/>
+        </foreign-key>
+    </table>
+
+    <table name="graph_data" phpName="GraphData">
+        <column name="id"   type="integer"      required="true" primaryKey="true" autoIncrement="true" />
+        <column name="data" type="longvarchar"  required="false" />
+    </table>
+</database>
