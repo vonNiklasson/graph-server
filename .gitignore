@@ -98,3 +98,15 @@ modules.xml
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/composer,phpstorm+all
+
+
+GraphServer/Base
+GraphServer/Map
+*.sq3
+generated-migrations/*
+
+generated-sql
+generated-conf
+propel.yml
+propel.yml.dist
+propel
