@@ -32,7 +32,7 @@ class Worker extends BaseWorker
     }
 
     public function preUpdate(ConnectionInterface $con = null) {
-        if ($this->isColumnModified('state')) {
+        if ($this->isColumnModified(WorkerTableMap::COL_STATE)) {
             if ($this->getState() == WorkerTableMap::COL_STATE_DONE ||
                 $this->getState() == WorkerTableMap::COL_STATE_DEAD) {
                 $this->setClosedTs(time());
