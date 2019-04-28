@@ -3,6 +3,7 @@
 namespace GraphServer;
 
 use GraphServer\Base\Worker as BaseWorker;
+use GraphServer\Map\WorkerTableMap;
 use GraphServer\Pool as ChildPool;
 use Propel\Runtime\Connection\ConnectionInterface;
 
@@ -19,14 +20,27 @@ use Propel\Runtime\Connection\ConnectionInterface;
 class Worker extends BaseWorker
 {
     public function setPool(ChildPool $v = null) {
-        parent::setNodeCount($v->getNodeCount());
-        parent::setOptimization($v->getOptimization());
+        $this->setNodeCount($v->getNodeCount());
+        $this->setOptimization($v->getOptimization());
 
         return parent::setPool($v);
     }
 
     public function preInsert(ConnectionInterface $con = null) {
-        parent::setCreatedTs(time());
+        $this->setCreatedTs(time());
         return parent::preInsert($con);
+    }
+
+    public function preUpdate(ConnectionInterface $con = null) {
+        if ($this->isColumnModified('state')) {
+            if ($this->getState() == WorkerTableMap::COL_STATE_DONE ||
+                $this->getState() == WorkerTableMap::COL_STATE_DEAD) {
+                $this->setClosedTs(time());
+            } elseif ($this->getState() == WorkerTableMap::COL_STATE_IN_PROGRESS) {
+                $this->setClosedTs(null);
+            }
+        }
+
+        return parent::preUpdate($con);
     }
 }

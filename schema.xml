@@ -20,7 +20,8 @@
     </table>
 
     <table name="worker" phpName="Worker">
-        <column name="id"           type="integer"  required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="id"           type="integer"  required="true"     primaryKey="true" autoIncrement="true"/>
+        <column name="worker_name"  type="char"     required="false"    size="31" />
         <column name="pool_id"      type="integer"  required="true"/>
         <column name="created_ts"   type="integer"  required="true" />
         <column name="closed_ts"    type="integer"  required="false" />
@@ -59,7 +60,7 @@
             <reference local="edge_data_id" foreign="id"/>
         </foreign-key>
 
-        <foreign-key foreignTable="worker_data" phpName="Eccentricity" refPhpName="Worker">
+        <foreign-key foreignTable="worker_data" phpName="Eccentricities" refPhpName="Worker">
             <reference local="eccentricity_data_id" foreign="id"/>
         </foreign-key>
     </table>
