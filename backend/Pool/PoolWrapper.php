@@ -34,12 +34,15 @@ class PoolWrapper {
         }
 
         // Otherwise, create a new worker and return it
+        /** @var Pool $pool */
         $pool = $pools->getFirst();
 
         $worker = new Worker();
         $worker->setWorkerName(strtolower($workerName));
         $worker->setPool($pool);
         $worker->save();
+
+        $pool->setInProgressCount($pool->getInProgressCount() + 1);
 
         return $worker;
     }
@@ -90,7 +93,17 @@ class PoolWrapper {
             $worker->setEccentricities($eccentricities);
         }
 
-        $worker->setState(WorkerTableMap::COL_STATE_DONE);
+        if ($worker->getState() != WorkerTableMap::COL_STATE_DONE) {
+            $worker->setState(WorkerTableMap::COL_STATE_DONE);
+
+            $pool = $worker->getPool();
+            $pool->setCompletedCount($pool->setCompletedCount() + 1);
+
+            // If the worker was not dead, decrease the progress count by one
+            if ($worker->getState() != WorkerTableMap::COL_STATE_DEAD) {
+                $pool->setInProgressCount($pool->getInProgressCount() - 1);
+            }
+        }
         $worker->save();
 
         return true;
