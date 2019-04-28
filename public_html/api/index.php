@@ -36,22 +36,21 @@ $app->post('/thread[/]', function(Request $request, Response $response, array $a
     return $response;
 })->setName('create-thread');
 
+
 $app->put('/thread/{workerId}[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');
     $workerId = strtolower($args['workerId']);
 
     $body = $request->getParsedBody();
 
-    $result = PoolWrapper::AddWorkerData($workerId, $body);
+    $worker = PoolWrapper::AddWorkerData($workerId, $body);
 
-    if ($result == true) {
-        $response = $response->withStatus(202);
-    } else {
-        $response = $response->withStatus(400);
-    }
+    $response = $response->withStatus(202);
+    $response = $response->withJson($worker->toArray())
 
     return $response;
 })->setName('update-thread');
+
 
 $app->get('/thread/{workerId}[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');
@@ -67,6 +66,7 @@ $app->get('/thread/{workerId}[/]', function(Request $request, Response $response
 
     return $response->withJson($worker->toArray());
 })->setName('view-thread');
+
 
 try {
     $app->run();

@@ -98,7 +98,7 @@ class PoolWrapper {
             $worker->setState(WorkerTableMap::COL_STATE_DONE);
 
             $pool = $worker->getPool();
-            $pool->setCompletedCount($pool->setCompletedCount() + 1);
+            $pool->setCompletedCount($pool->getCompletedCount() + 1);
 
             // If the worker was not dead, decrease the progress count by one
             if ($worker->getState() != WorkerTableMap::COL_STATE_DEAD) {
@@ -110,7 +110,7 @@ class PoolWrapper {
 
         $worker->save();
 
-        return true;
+        return $worker;
     }
 
     public static function GetWorkerResults(string $workerName) {
