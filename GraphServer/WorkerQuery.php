@@ -3,6 +3,8 @@
 namespace GraphServer;
 
 use GraphServer\Base\WorkerQuery as BaseWorkerQuery;
+use GraphServer\Map\WorkerTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'worker' table.
@@ -16,5 +18,28 @@ use GraphServer\Base\WorkerQuery as BaseWorkerQuery;
  */
 class WorkerQuery extends BaseWorkerQuery
 {
+    public function filterRetired($threshold = -10) {
+        $dead_ts = time() - $threshold;
+        return $this->filterByState(WorkerTableMap::COL_STATE_IN_PROGRESS)
+            ->filterByCreatedTs($dead_ts, Criteria::LESS_THAN);
+    }
 
+    public static function GetStateValue($queryType) {
+        switch ($queryType) {
+            case WorkerTableMap::COL_STATE_IN_PROGRESS:
+                return 0;
+            case WorkerTableMap::COL_STATE_DONE:
+                return 1;
+            case WorkerTableMap::COL_STATE_DEAD:
+                return 2;
+        }
+        throw new \InvalidArgumentException("Invalid query type");
+    }
+
+    public function kill() {
+        return parent::update(array(
+            'ClosedTs' => time(),
+            'State' => WorkerQuery::GetStateValue(WorkerTableMap::COL_STATE_DEAD)
+        ));
+    }
 }
