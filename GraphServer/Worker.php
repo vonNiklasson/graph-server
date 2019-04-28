@@ -49,20 +49,20 @@ class Worker extends BaseWorker
         $wd = new WorkerData();
         $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_NODES);
         $wd->setData($nodes);
-        $this->$this->addData($wd);
+        $this->addData($wd);
     }
 
     public function addEdgeData($edges) {
         $wd = new WorkerData();
         $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_EDGES);
         $wd->setData($edges);
-        $this->$this->addData($wd);
+        $this->addData($wd);
     }
 
     public function addEccentricityData($eccentricities) {
         $wd = new WorkerData();
         $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_ECCENTRICITIES);
         $wd->setData($eccentricities);
-        $this->$this->addData($wd);
+        $this->addData($wd);
     }
 }
