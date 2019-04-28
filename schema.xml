@@ -37,11 +37,11 @@
         <column name="edge_count"   type="integer"  required="false" />
 
         <!-- Advanced data about the graph -->
-        <column name="convergence_rate"     type="decimal"  required="false" />
-        <column name="energy_cost"          type="decimal"  required="false" />
+        <column name="convergence_rate"     type="decimal"  size="11" scale="10"    required="false" />
+        <column name="energy_cost"          type="decimal"  size="20" scale="5"    required="false" />
         <column name="edge_cost"            type="integer"  required="false" />
         <column name="diameter"             type="integer"  required="false" />
-        <column name="average_eccentricity" type="decimal"  required="false" />
+        <column name="average_eccentricity" type="decimal"  size="15" scale="10"    required="false" />
 
         <!-- Raw data based on the graph -->
         <column name="node_data_id"         type="integer" required="false"/>
