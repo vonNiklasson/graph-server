@@ -48,9 +48,11 @@ require_once(__DIR__ . '/../backend/config.php');
                     echo '<td>' . $pool->getCompletedCount() . '</td>';
                     echo '<td>' . $pool->getInProgressCount() . '</td>';
                     echo '<td>' . $pool->getDeadCount() . '</td>';
-                    echo '<td>' . $pool->getMaxCount();
+                    echo '<td>';
                     if ($pool->getMaxCount() != 0) {
-                        echo ' (' . $maxCountPercentage . '%)';
+                        echo $pool->getMaxCount() . ' (' . $maxCountPercentage . '%)';
+                    } else {
+                        echo '-';
                     }
                     echo '</td>';
                 echo '</tr>';
