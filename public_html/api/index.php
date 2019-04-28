@@ -46,7 +46,7 @@ $app->put('/thread/{workerId}[/]', function(Request $request, Response $response
     $worker = PoolWrapper::AddWorkerData($workerId, $body);
 
     $response = $response->withStatus(202);
-    $response = $response->withJson($worker->toArray())
+    $response = $response->withJson($worker->toArray());
 
     return $response;
 })->setName('update-thread');
