@@ -76,19 +76,19 @@ class PoolWrapper {
         }
 
 
-        if (array_key_exists('nodes', $body)) {
+        if (array_key_exists('Nodes', $body)) {
             $nodeData = new WorkerData();
             $nodeData->setData($body['nodes']);
             $worker->setNodes($nodeData);
         }
 
-        if (array_key_exists('edges', $body)) {
+        if (array_key_exists('Edges', $body)) {
             $edgeData = new WorkerData();
             $edgeData->setData($body['edges']);
             $worker->setEdges($edgeData);
         }
 
-        if (array_key_exists('eccentricities', $body)) {
+        if (array_key_exists('Eccentricities', $body)) {
             $eccentricities = new WorkerData();
             $eccentricities->setData($body['eccentricities']);
             $worker->setEccentricities($eccentricities);
