@@ -43,30 +43,19 @@
         <column name="diameter"             type="integer"  required="false" />
         <column name="average_eccentricity" type="decimal"  size="15" scale="10"    required="false" />
 
-        <!-- Raw data based on the graph -->
-        <column name="node_data_id"         type="integer" required="false"/>
-        <column name="edge_data_id"         type="integer" required="false"/>
-        <column name="eccentricity_data_id" type="integer" required="false"/>
-
         <foreign-key foreignTable="pool" phpName="Pool" refPhpName="Workers">
             <reference local="pool_id" foreign="id"/>
-        </foreign-key>
-
-        <foreign-key foreignTable="worker_data" phpName="Nodes" refPhpName="Worker">
-            <reference local="node_data_id" foreign="id"/>
-        </foreign-key>
-
-        <foreign-key foreignTable="worker_data" phpName="Edges" refPhpName="Worker">
-            <reference local="edge_data_id" foreign="id"/>
-        </foreign-key>
-
-        <foreign-key foreignTable="worker_data" phpName="Eccentricities" refPhpName="Worker">
-            <reference local="eccentricity_data_id" foreign="id"/>
         </foreign-key>
     </table>
 
     <table name="worker_data" phpName="WorkerData">
-        <column name="id"   type="integer"      required="true" primaryKey="true" autoIncrement="true" />
-        <column name="data" type="longvarchar"  required="false" />
+        <column name="id"           type="integer"      required="true" primaryKey="true" autoIncrement="true" />
+        <column name="worker_id"    type="integer"      required="true"/>
+        <column name="data_type"    type="enum"         required="true" valueSet="edges,nodes,eccentricities" />
+        <column name="data"         type="longvarchar"  required="false" />
+
+        <foreign-key foreignTable="worker" phpName="Worker" refPhpName="Data">
+            <reference local="worker_id" foreign="id"/>
+        </foreign-key>
     </table>
 </database>
