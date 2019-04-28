@@ -24,13 +24,11 @@ class PoolQuery extends BasePoolQuery
      * @return BasePoolQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function orderByCurrentCount($order = Criteria::ASC) {
-        return parent::withColumn('completed_count+in_progress_count', 'current_count')
-            ->orderBy('current_count', $order);
+        return parent::addAscendingOrderByColumn('completed_count+in_progress_count');
     }
 
     public function getActive() {
-        return parent::withColumn('completed_count+in_progress_count', 'current_count')
-            ->where('active = "true" and (current_count < max_count or max_count = 0)');
+        return parent::where('active = "true" and (completed_count+in_progress_count < max_count or max_count = 0)');
 
     }
 }
