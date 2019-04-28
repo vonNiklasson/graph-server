@@ -43,6 +43,7 @@ class PoolWrapper {
         $worker->save();
 
         $pool->setInProgressCount($pool->getInProgressCount() + 1);
+        $pool->save();
 
         return $worker;
     }
@@ -103,7 +104,10 @@ class PoolWrapper {
             if ($worker->getState() != WorkerTableMap::COL_STATE_DEAD) {
                 $pool->setInProgressCount($pool->getInProgressCount() - 1);
             }
+
+            $pool->save();
         }
+
         $worker->save();
 
         return true;
