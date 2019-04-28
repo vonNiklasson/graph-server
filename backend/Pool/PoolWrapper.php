@@ -3,12 +3,14 @@
 
 namespace Pool;
 
+use GraphServer\Map\PoolTableMap;
 use GraphServer\Map\WorkerTableMap;
 use GraphServer\Pool;
 use GraphServer\PoolQuery;
 use GraphServer\Worker;
 use GraphServer\WorkerData;
 use GraphServer\WorkerQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 
 class PoolWrapper {
@@ -110,5 +112,41 @@ class PoolWrapper {
     public static function GetWorkerResults(string $workerName) {
         $workerResults = WorkerQuery::create()->filterByWorkerName($workerName)->orderByCreatedTs()->find();
         return $workerResults;
+    }
+
+    public static function UpdateWorkers(string $workerName=null, $threshold=3600) {
+        $workerQuery = WorkerQuery::create()->filterRetired($threshold);
+        if ($workerName != null) {
+            $workerQuery = $workerQuery->filterByWorkerName($workerName);
+        }
+        $workerQuery->kill();
+    }
+
+    public static function UpdatePools() {
+        $c_progress = new Criteria();
+        $c_progress->add(
+            WorkerTableMap::COL_STATE,
+            WorkerQuery::GetStateValue(WorkerTableMap::COL_STATE_IN_PROGRESS)
+        );
+
+        $c_completed = new Criteria();
+        $c_completed->add(
+            WorkerTableMap::COL_STATE,
+            WorkerQuery::GetStateValue(WorkerTableMap::COL_STATE_DONE)
+        );
+
+        $c_dead = new Criteria();
+        $c_dead->add(
+            WorkerTableMap::COL_STATE,
+            WorkerQuery::GetStateValue(WorkerTableMap::COL_STATE_DEAD)
+        );
+
+        $pools = PoolQuery::create()->leftJoinWithWorkers()->find();
+        foreach ($pools as $pool) {
+            $pool->setInProgressCount($pool->countWorkerss($c_progress));
+            $pool->setCompletedCount($pool->countWorkerss($c_completed));
+            $pool->setDeadCount($pool->countWorkerss($c_dead));
+            $pool->save();
+        }
     }
 }
