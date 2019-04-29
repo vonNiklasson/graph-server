@@ -43,7 +43,11 @@ require_once(__DIR__ . '/../backend/config.php');
             $pools = PoolQuery::create()->orderByNodeCount()->filterByOptimization('combined')->filterByActive(true)->find();
             foreach ($pools as $pool) {
                 $maxCountPercentage = round($pool->getCompletedCount() / $pool->getMaxCount() * 100);
-                echo '<tr>';
+                if ($pool->getInProgressCount() > 0) {
+                  echo '<tr class="table-primary">';
+                } else {
+                  echo '<tr>';
+                }
                     echo '<th scope="row">' . $pool->getId() . '</th>';
                     echo '<td>' . $pool->getNodeCount() . '</td>';
                     echo '<td>' . $pool->getCompletedCount() . '</td>';
@@ -83,7 +87,13 @@ require_once(__DIR__ . '/../backend/config.php');
         ->limit(25)->find();
 
     foreach ($workers as $worker) {
-        echo '<tr>';
+        if ($worker->getState() == WorkerTableMap::COL_STATE_IN_PROGRESS) {
+            echo '<tr class="table-primary">';
+        } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DONE) {
+            echo '<tr class="table-success">';
+        } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DEAD) {
+            echo '<tr class="table-danger">';
+        }
         echo '<th scope="row">' . $worker->getId() . '</th>';
         echo '<td>' . date('h:i:s', $worker->getCreatedTs()) . '</td>';
         echo '<td>' . $worker->getWorkerName() . '</td>';
