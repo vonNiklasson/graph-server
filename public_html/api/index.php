@@ -68,7 +68,7 @@ $app->get('/thread/{workerId}[/]', function(Request $request, Response $response
     return $response->withJson($worker->toArray());
 })->setName('view-thread');
 
-$app->get('/workers/{workerName}/close[/]', function(Request $request, Response $response, array $args) {
+$app->any('/workers/{workerName}/close[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');
     $workerName = strtolower($args['workerName']);
 

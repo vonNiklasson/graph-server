@@ -18,7 +18,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
  */
 class WorkerQuery extends BaseWorkerQuery
 {
-    public function filterRetired($threshold = -10) {
+    public function filterRetired($threshold = 7200) {
         $dead_ts = time() - $threshold;
         return $this->filterByState(WorkerTableMap::COL_STATE_IN_PROGRESS)
             ->filterByCreatedTs($dead_ts, Criteria::LESS_THAN);

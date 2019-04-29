@@ -114,7 +114,7 @@ class PoolWrapper {
         return $workerResults;
     }
 
-    public static function UpdateWorkers(string $workerName=null, $threshold=3600) {
+    public static function UpdateWorkers(string $workerName = null, $threshold = 7200) {
         $workerQuery = WorkerQuery::create()->filterRetired($threshold);
         if ($workerName != null) {
             $workerQuery = $workerQuery->filterByWorkerName($workerName);
