@@ -35,7 +35,6 @@ require_once(__DIR__ . '/../backend/config.php');
                 <th scope="col">Nodes</th>
                 <th scope="col">Completed</th>
                 <th scope="col">In progress</th>
-                <th scope="col">Dead</th>
                 <th scope="col">Max count</th>
             </tr>
         </thead>
@@ -49,7 +48,6 @@ require_once(__DIR__ . '/../backend/config.php');
                     echo '<td>' . $pool->getNodeCount() . '</td>';
                     echo '<td>' . $pool->getCompletedCount() . '</td>';
                     echo '<td>' . $pool->getInProgressCount() . '</td>';
-                    echo '<td>' . $pool->getDeadCount() . '</td>';
                     echo '<td>';
                     if ($pool->getMaxCount() != 0) {
                         echo $pool->getMaxCount() . ' (' . $maxCountPercentage . '%)';
