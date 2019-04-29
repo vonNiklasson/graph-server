@@ -73,6 +73,7 @@ $app->any('/workers/{workerName}/close[/]', function(Request $request, Response 
     $workerName = strtolower($args['workerName']);
 
     PoolWrapper::UpdateWorkers($workerName, -10);
+    PoolWrapper::UpdatePools();
 
     $response = $response->withStatus(202);
 
