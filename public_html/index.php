@@ -99,11 +99,12 @@ require_once(__DIR__ . '/../backend/config.php');
         echo '<td>' . $worker->getWorkerName() . '</td>';
         echo '<td>' . $worker->getNodeCount() . '</td>';
         echo '<td>';
-        $delta = $worker->getClosedTs() - $worker->getCreatedTs();
         if ($worker->getState() == WorkerTableMap::COL_STATE_IN_PROGRESS) {
+            $delta = time() - $worker->getCreatedTs();
             echo 'In progress';
             echo ' (' . date('H:i:s', $delta) . ')';
         } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DONE) {
+            $delta = $worker->getClosedTs() - $worker->getCreatedTs();
             echo 'Finished';
             echo ' (' . date('H:i:s', $delta) . ')';
         } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DEAD) {
