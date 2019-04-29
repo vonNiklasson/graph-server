@@ -96,7 +96,7 @@ require_once(__DIR__ . '/../backend/config.php');
         } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DONE) {
             echo 'Finished';
             $delta = $worker->getClosedTs() - $worker->getCreatedTs();
-            echo ' (' . date('h:i:s', $delta) . ')';
+            echo ' (' . date('H:i:s', $delta) . ')';
         } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DEAD) {
             echo 'Dead';
         }
