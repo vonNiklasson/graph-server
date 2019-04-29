@@ -84,7 +84,7 @@ require_once(__DIR__ . '/../backend/config.php');
     $workers = WorkerQuery::create()
         ->filterByOptimization('combined')
         ->orderByCreatedTs(\Propel\Runtime\ActiveQuery\Criteria::DESC)
-        ->limit(25)->find();
+        ->limit(50)->find();
 
     foreach ($workers as $worker) {
         if ($worker->getState() == WorkerTableMap::COL_STATE_IN_PROGRESS) {
@@ -95,15 +95,16 @@ require_once(__DIR__ . '/../backend/config.php');
             echo '<tr class="table-danger">';
         }
         echo '<th scope="row">' . $worker->getId() . '</th>';
-        echo '<td>' . date('h:i:s', $worker->getCreatedTs()) . '</td>';
+        echo '<td>' . date('H:i:s', $worker->getCreatedTs() + 7200) . '</td>';
         echo '<td>' . $worker->getWorkerName() . '</td>';
         echo '<td>' . $worker->getNodeCount() . '</td>';
         echo '<td>';
+        $delta = $worker->getClosedTs() - $worker->getCreatedTs();
         if ($worker->getState() == WorkerTableMap::COL_STATE_IN_PROGRESS) {
             echo 'In progress';
+            echo ' (' . date('H:i:s', $delta) . ')';
         } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DONE) {
             echo 'Finished';
-            $delta = $worker->getClosedTs() - $worker->getCreatedTs();
             echo ' (' . date('H:i:s', $delta) . ')';
         } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DEAD) {
             echo 'Dead';

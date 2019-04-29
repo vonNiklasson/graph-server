@@ -108,5 +108,6 @@ generated-migrations/*
 generated-sql
 generated-conf
 propel.yml
+propel.json
 propel.yml.dist
 propel
