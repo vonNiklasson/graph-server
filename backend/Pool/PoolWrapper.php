@@ -47,6 +47,11 @@ class PoolWrapper {
         $pool->setInProgressCount($pool->getInProgressCount() + 1);
         $pool->save();
 
+        $worker->setVirtualColumn('SolveType', $pool->getSolveType());
+        $worker->setVirtualColumn('EdgeData', $pool->getEdgeData());
+        $worker->setVirtualColumn('NodeData', $pool->getNodeData());
+        $worker->setVirtualColumn('RemovedNodeCount', $pool->getRemovedNodeCount());
+
         return $worker;
     }
 
