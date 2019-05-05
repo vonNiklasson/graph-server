@@ -43,19 +43,19 @@ require_once(__DIR__ . '/../backend/config.php');
         <?php
             $pools = PoolQuery::create()->orderByNodeCount()->filterByOptimization('combined')->filterByActive(true)->find();
             foreach ($pools as $pool) {
-                $maxCountPercentage = round($pool->getCompletedCount() / $pool->getMaxCount() * 100);
                 if ($pool->getInProgressCount() > 0) {
                   echo '<tr class="table-primary">';
                 } else {
                   echo '<tr>';
                 }
                     echo '<th scope="row">' . $pool->getId() . '</th>';
-                    echo '<th>' . $pool->getName() . '</th>';
+                    echo '<td>' . $pool->getName() . '</td>';
                     echo '<td>' . $pool->getNodeCount() . ' (-' . $pool->getRemovedNodeCount() . ')</td>';
                     echo '<td>' . $pool->getCompletedCount() . '</td>';
                     echo '<td>' . $pool->getInProgressCount() . '</td>';
                     echo '<td>';
                     if ($pool->getMaxCount() != 0) {
+                        $maxCountPercentage = round($pool->getCompletedCount() / $pool->getMaxCount() * 100);
                         echo $pool->getMaxCount() . ' (' . $maxCountPercentage . '%)';
                     } else {
                         echo '-';
