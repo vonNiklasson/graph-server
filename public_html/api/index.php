@@ -12,6 +12,8 @@ $config['displayErrorDetails'] = true;
 
 $app = new \Slim\App(["settings" => $config]);
 
+
+/* Get the worker status */
 $app->get('/workers/{workerName}[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');
     $workerName = strtolower($args['workerName']);
@@ -24,6 +26,8 @@ $app->get('/workers/{workerName}[/]', function(Request $request, Response $respo
     return $response;
 })->setName('get-worker-status');
 
+
+/* Getting a new thread */
 $app->post('/thread[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');
     $parsedBody = $request->getParsedBody();
@@ -38,6 +42,7 @@ $app->post('/thread[/]', function(Request $request, Response $response, array $a
 })->setName('create-thread');
 
 
+/* Uploading results */
 $app->put('/thread/{workerId}[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');
     $workerId = strtolower($args['workerId']);
@@ -53,6 +58,7 @@ $app->put('/thread/{workerId}[/]', function(Request $request, Response $response
 })->setName('update-thread');
 
 
+/* Get worker id */
 $app->get('/thread/{workerId}[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');
     $workerId = strtolower($args['workerId']);
@@ -68,6 +74,8 @@ $app->get('/thread/{workerId}[/]', function(Request $request, Response $response
     return $response->withJson($worker->toArray());
 })->setName('view-thread');
 
+
+/* Closing the old workers */
 $app->any('/workers/{workerName}/close[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');
     $workerName = strtolower($args['workerName']);
