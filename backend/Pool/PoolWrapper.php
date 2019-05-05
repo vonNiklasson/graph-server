@@ -84,15 +84,15 @@ class PoolWrapper {
 
 
         if (array_key_exists('Nodes', $body)) {
-            $worker->addNodeData(json_encode($body['Nodes']));
+            $worker->addNodeData(json_encode((object)$body['Nodes']));
         }
 
         if (array_key_exists('Edges', $body)) {
-            $worker->addEdgeData(json_encode($body['Edges']));
+            $worker->addEdgeData(json_encode((object)$body['Edges']));
         }
 
         if (array_key_exists('Eccentricities', $body)) {
-            $worker->addEccentricityData(json_encode($body['Eccentricities']));
+            $worker->addEccentricityData(json_encode((object)$body['Eccentricities']));
         }
 
         if ($worker->getState() != WorkerTableMap::COL_STATE_DONE) {
