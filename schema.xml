@@ -13,7 +13,7 @@
         <column name="edge_data"    type="longvarchar"  required="false" />
         <column name="removed_node_count"   type="integer"      required="false" />
 
-        <column name="solve_type"   type="enum"         required="true" valueSet="random,diff" defaultValue="random" />
+        <column name="solve_type"   type="enum"         required="true" valueSet="random,diff,spec" defaultValue="random" />
 
         <column name="active"       type="boolean"      required="true" defaultValue="true" />
 
