@@ -27,15 +27,16 @@ require_once(__DIR__ . '/../backend/config.php');
 </div>
 
 <div class="container">
-    <h2>Combined optimization</h2>
+    <h2>Differential graphs</h2>
     <table class="table table-striped table-hover table-sm">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nodes</th>
-                <th scope="col">Completed</th>
-                <th scope="col">In progress</th>
-                <th scope="col">Max count</th>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Nodes</th>
+              <th scope="col">Completed</th>
+              <th scope="col">In progress</th>
+              <th scope="col">Max count</th>
             </tr>
         </thead>
         <tbody>
@@ -49,7 +50,8 @@ require_once(__DIR__ . '/../backend/config.php');
                   echo '<tr>';
                 }
                     echo '<th scope="row">' . $pool->getId() . '</th>';
-                    echo '<td>' . $pool->getNodeCount() . '</td>';
+                    echo '<th>' . $pool->getName() . '</th>';
+                    echo '<td>' . $pool->getNodeCount() . ' (-' . $pool->getRemovedNodeCount() . ')</td>';
                     echo '<td>' . $pool->getCompletedCount() . '</td>';
                     echo '<td>' . $pool->getInProgressCount() . '</td>';
                     echo '<td>';
@@ -75,6 +77,7 @@ require_once(__DIR__ . '/../backend/config.php');
       <th scope="col">#</th>
       <th scope="col">Created</th>
       <th scope="col">Client</th>
+      <th scope="col">Name</th>
       <th scope="col">Nodes</th>
       <th scope="col">State</th>
     </tr>
@@ -84,9 +87,11 @@ require_once(__DIR__ . '/../backend/config.php');
     $workers = WorkerQuery::create()
         ->filterByOptimization('combined')
         ->orderByCreatedTs(\Propel\Runtime\ActiveQuery\Criteria::DESC)
-        ->limit(50)->find();
+        ->innerJoinWithPool()
+        ->limit(100)->find();
 
     foreach ($workers as $worker) {
+        $pool = $worker->getPool();
         if ($worker->getState() == WorkerTableMap::COL_STATE_IN_PROGRESS) {
             echo '<tr class="table-primary">';
         } elseif ($worker->getState() == WorkerTableMap::COL_STATE_DONE) {
@@ -97,7 +102,8 @@ require_once(__DIR__ . '/../backend/config.php');
         echo '<th scope="row">' . $worker->getId() . '</th>';
         echo '<td>' . date('H:i:s', $worker->getCreatedTs() + 7200) . '</td>';
         echo '<td>' . $worker->getWorkerName() . '</td>';
-        echo '<td>' . $worker->getNodeCount() . '</td>';
+        echo '<td>' . $pool->getName() . '</td>';
+        echo '<td>' . $pool->getNodeCount() . ' (-' . $pool->getRemovedNodeCount() . ')</td>';
         echo '<td>';
         if ($worker->getState() == WorkerTableMap::COL_STATE_IN_PROGRESS) {
             $delta = time() - $worker->getCreatedTs();
