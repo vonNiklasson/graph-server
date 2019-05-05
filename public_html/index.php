@@ -79,6 +79,7 @@ require_once(__DIR__ . '/../backend/config.php');
       <th scope="col">Client</th>
       <th scope="col">Name</th>
       <th scope="col">Nodes</th>
+      <th scope="col">Energy</th>
       <th scope="col">State</th>
     </tr>
     </thead>
@@ -104,6 +105,11 @@ require_once(__DIR__ . '/../backend/config.php');
         echo '<td>' . $worker->getWorkerName() . '</td>';
         echo '<td>' . $pool->getName() . '</td>';
         echo '<td>' . $pool->getNodeCount() . ' (-' . $pool->getRemovedNodeCount() . ')</td>';
+        if ($worker->getEnergyCost() != null) {
+            echo '<td>' . $worker->getEnergyCost() . '</td>';
+        } else {
+            echo '<td>-</td>';
+        }
         echo '<td>';
         if ($worker->getState() == WorkerTableMap::COL_STATE_IN_PROGRESS) {
             $delta = time() - $worker->getCreatedTs();
