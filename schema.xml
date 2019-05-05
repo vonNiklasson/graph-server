@@ -4,7 +4,8 @@
           namespace="GraphServer">
 
     <table name="pool" phpName="Pool">
-        <column name="id"           type="integer"      required="true" primaryKey="true" autoIncrement="true" />
+        <column name="id"           type="integer"      required="true"     primaryKey="true" autoIncrement="true" />
+        <column name="name"         type="char"         required="true"     defaultValue="-" size="31" />
 
         <column name="node_count"   type="integer"      required="true" />
 
