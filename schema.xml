@@ -10,7 +10,7 @@
         <column name="node_count"   type="integer"      required="true" />
         <column name="extra_data"   type="longvarchar"  required="false" />
 
-        <column name="solve_type"   type="char"         required="true" defaultValue="random" />
+        <column name="solve_type"   type="char"         required="true" defaultValue="random" size="31" />
 
         <column name="active"       type="boolean"      required="true" defaultValue="true" />
 
