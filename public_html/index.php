@@ -1,5 +1,6 @@
 <?php
 
+use GraphServer\Map\WorkerDataTableMap;
 use GraphServer\Map\WorkerTableMap;
 use GraphServer\PoolQuery;
 use GraphServer\WorkerDataQuery;
@@ -109,11 +110,15 @@ require_once(__DIR__ . '/../backend/config.php');
         echo '<td>' . $pool->getName() . '</td>';
         echo '<td>' . $pool->getNodeCount() . '</td>';
         $customData = WorkerDataQuery::create()->filterByWorker($worker)
-            ->filterByDataType(\GraphServer\Map\WorkerDataTableMap::COL_DATA_TYPE_CUSTOM)->findOne();
-        $raw_custom_data = $customData->getData();
-        $json_custom = json_decode($raw_custom_data);
-        if (isset($json_custom->coverage)) {
-            echo '<td>' . $json_custom->coverage . '</td>';
+            ->filterByDataType(WorkerDataTableMap::COL_DATA_TYPE_CUSTOM)->findOne();
+        if (isset($customData)) {
+            $raw_custom_data = $customData->getData();
+            $json_custom = json_decode($raw_custom_data);
+            if (isset($json_custom->coverage)) {
+                echo '<td>' . $json_custom->coverage . '</td>';
+            } else {
+                echo '<td>-</td>';
+            }
         } else {
             echo '<td>-</td>';
         }
