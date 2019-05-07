@@ -65,4 +65,11 @@ class Worker extends BaseWorker
         $wd->setData($eccentricities);
         $this->addData($wd);
     }
+
+    public function addCustomData($extra_data) {
+        $wd = new WorkerData();
+        $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_CUSTOM);
+        $wd->setData($extra_data);
+        $this->addData($wd);
+    }
 }

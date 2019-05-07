@@ -8,12 +8,9 @@
         <column name="name"         type="char"         required="true"     defaultValue="-" size="31" />
 
         <column name="node_count"   type="integer"      required="true" />
+        <column name="extra_data"   type="longvarchar"  required="false" />
 
-        <column name="node_data"    type="longvarchar"  required="false" />
-        <column name="edge_data"    type="longvarchar"  required="false" />
-        <column name="removed_node_count"   type="integer"      required="false" />
-
-        <column name="solve_type"   type="enum"         required="true" valueSet="random,diff,spec" defaultValue="random" />
+        <column name="solve_type"   type="char"         required="true" defaultValue="random" />
 
         <column name="active"       type="boolean"      required="true" defaultValue="true" />
 
@@ -59,7 +56,7 @@
     <table name="worker_data" phpName="WorkerData">
         <column name="id"           type="integer"      required="true" primaryKey="true" autoIncrement="true" />
         <column name="worker_id"    type="integer"      required="true"/>
-        <column name="data_type"    type="enum"         required="true" valueSet="edges,nodes,eccentricities" />
+        <column name="data_type"    type="enum"         required="true" valueSet="edges,nodes,eccentricities,custom" />
         <column name="data"         type="longvarchar"  required="false" />
 
         <foreign-key foreignTable="worker" phpName="Worker" refPhpName="Data">

@@ -48,9 +48,7 @@ class PoolWrapper {
         $pool->save();
 
         $worker->setVirtualColumn('SolveType', $pool->getSolveType());
-        $worker->setVirtualColumn('EdgeData', $pool->getEdgeData());
-        $worker->setVirtualColumn('NodeData', $pool->getNodeData());
-        $worker->setVirtualColumn('RemovedNodeCount', $pool->getRemovedNodeCount());
+        $worker->setVirtualColumn('ExtraData', $pool->getExtraData());
 
         return $worker;
     }
@@ -93,6 +91,10 @@ class PoolWrapper {
 
         if (array_key_exists('Eccentricities', $body)) {
             $worker->addEccentricityData(json_encode((object)$body['Eccentricities']));
+        }
+
+        if (array_key_exists('CustomData', $body)) {
+            $worker->addCustomData(json_encode((object)$body['CustomData']));
         }
 
         if ($worker->getState() != WorkerTableMap::COL_STATE_DONE) {
