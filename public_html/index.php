@@ -2,6 +2,7 @@
 
 use GraphServer\Map\WorkerTableMap;
 use GraphServer\PoolQuery;
+use GraphServer\WorkerDataQuery;
 use GraphServer\WorkerQuery;
 
 require_once(__DIR__ . '/../backend/config.php');
@@ -81,7 +82,7 @@ require_once(__DIR__ . '/../backend/config.php');
       <th scope="col">Client</th>
       <th scope="col">Name</th>
       <th scope="col">Nodes</th>
-      <th scope="col">Energy</th>
+      <th scope="col">Coverage</th>
       <th scope="col">State</th>
     </tr>
     </thead>
@@ -107,8 +108,12 @@ require_once(__DIR__ . '/../backend/config.php');
         echo '<td>' . $worker->getWorkerName() . '</td>';
         echo '<td>' . $pool->getName() . '</td>';
         echo '<td>' . $pool->getNodeCount() . '</td>';
-        if ($worker->getEnergyCost() != null) {
-            echo '<td>' . $worker->getEnergyCost() . '</td>';
+        $customData = WorkerDataQuery::create()->filterByWorker($worker)
+            ->filterByDataType(\GraphServer\Map\WorkerDataTableMap::COL_DATA_TYPE_CUSTOM)->findOne();
+        $raw_custom_data = $customData->getData();
+        $json_custom = json_decode($raw_custom_data);
+        if (isset($json_custom->coverage)) {
+            echo '<td>' . $json_custom->coverage . '</td>';
         } else {
             echo '<td>-</td>';
         }
