@@ -5,6 +5,7 @@ use GraphServer\Map\WorkerTableMap;
 use GraphServer\PoolQuery;
 use GraphServer\WorkerDataQuery;
 use GraphServer\WorkerQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 require_once(__DIR__ . '/../backend/config.php');
 
@@ -25,6 +26,29 @@ require_once(__DIR__ . '/../backend/config.php');
     <div class="container">
         <h1 class="display-4">Graph Server Status</h1>
         <p class="lead">This page shows the current pool status for the graph server.</p>
+        <?php
+
+        $workers_last_minute = WorkerQuery::create()
+            ->filterByState(WorkerTableMap::COL_STATE_DONE)
+            ->filterByClosedTs(time()-60, Criteria::GREATER_EQUAL)
+            ->count();
+
+        $workers_last_hour = WorkerQuery::create()
+            ->filterByState(WorkerTableMap::COL_STATE_DONE)
+            ->filterByClosedTs(time()-3600, Criteria::GREATER_EQUAL)
+            ->count();
+
+        $workers_last_hour_6 = WorkerQuery::create()
+            ->filterByState(WorkerTableMap::COL_STATE_DONE)
+            ->filterByClosedTs(time()-3600*24, Criteria::GREATER_EQUAL)
+            ->count();
+
+        ?>
+      <p>
+          <strong><?= $workers_last_minute ?></strong> graphs during last minute<br />
+          <strong><?= $workers_last_hour ?></strong> graphs during the last hour<br />
+          <strong><?= $workers_last_hour_6 ?></strong> graphs during the six hours
+      </p>
     </div>
 </div>
 
@@ -109,7 +133,7 @@ require_once(__DIR__ . '/../backend/config.php');
     <?php
     $workers = WorkerQuery::create()
         ->filterByOptimization('combined')
-        ->orderByCreatedTs(\Propel\Runtime\ActiveQuery\Criteria::DESC)
+        ->orderByCreatedTs(Criteria::DESC)
         ->innerJoinWithPool()
         ->limit(100)->find();
 
