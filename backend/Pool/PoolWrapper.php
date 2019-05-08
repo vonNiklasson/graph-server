@@ -169,8 +169,9 @@ class PoolWrapper {
             $workers = WorkerQuery::create()
                 ->filterByState(WorkerTableMap::COL_STATE_DONE)
                 ->filterById($workerData->getWorkerId())
-                ->filterByUpdateTs(time() - 600, CRITERIA::LESS_EQUAL)
+                ->filterByUpdateTs(time() - 60, CRITERIA::LESS_EQUAL)
                 ->find();
+
             if ($workers->count() == 0) {
                 continue;
             }
@@ -178,6 +179,8 @@ class PoolWrapper {
             /** @var Worker $worker */
             $worker = $workers->getFirst();
             $pool = $worker->getPool();
+
+            $worker->setVirtualColumn('Recalc', 'True');
 
             $worker->setVirtualColumn('SolveType', $pool->getSolveType());
             $worker->setVirtualColumn('ExtraData', $pool->getExtraData());
@@ -191,6 +194,7 @@ class PoolWrapper {
             $worker->save();
 
             return $worker;
+            break;
         }
 
         return null;
