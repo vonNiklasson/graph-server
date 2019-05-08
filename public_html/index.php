@@ -28,11 +28,6 @@ require_once(__DIR__ . '/../backend/config.php');
         <p class="lead">This page shows the current pool status for the graph server.</p>
         <?php
 
-        $workers_last_minute = WorkerQuery::create()
-            ->filterByState(WorkerTableMap::COL_STATE_DONE)
-            ->filterByClosedTs(time()-60, Criteria::GREATER_EQUAL)
-            ->count();
-
         $workers_last_hour = WorkerQuery::create()
             ->filterByState(WorkerTableMap::COL_STATE_DONE)
             ->filterByClosedTs(time()-3600, Criteria::GREATER_EQUAL)
@@ -45,9 +40,9 @@ require_once(__DIR__ . '/../backend/config.php');
 
         ?>
       <p>
-          <strong><?= $workers_last_minute ?></strong> graphs/minute<br />
-          <strong><?= $workers_last_hour ?></strong> graphs/hour<br />
-          <strong><?= $workers_last_hour_6 ?></strong> graphs/six hours
+          <strong><?= round($workers_last_hour/60) ?></strong> graphs / minute<br />
+          <strong><?= $workers_last_hour ?></strong> graphs / hour<br />
+          <strong><?= $workers_last_hour_6 ?></strong> graphs / six hours
       </p>
     </div>
 </div>
