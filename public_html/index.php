@@ -73,16 +73,16 @@ require_once(__DIR__ . '/../backend/config.php');
                 $total_completed += $pool->getCompletedCount();
                 $total_in_progress += $pool->getInProgressCount();
             }
-            echo '<thead class="dark"><tr>';
+            echo '<thead class="thead-light"><tr>';
 
-                echo '<td></td>';
-                echo '<td></td>';
-                echo '<td></td>';
+                echo '<th></th>';
+                echo '<th></th>';
+                echo '<th></th>';
 
                 echo '<th>' . $total_completed . '</th>';
                 echo '<th>' . $total_in_progress . '</th>';
 
-                echo '<td></td>';
+                echo '<th></th>';
 
             echo '</tr></thead>';
         ?>
