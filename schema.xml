@@ -30,7 +30,7 @@
         <column name="pool_id"      type="integer"  required="true"/>
         <column name="created_ts"   type="integer"  required="true" />
         <column name="closed_ts"    type="integer"  required="false" />
-        <column name="update_ts"    type="integer"  required="false" />
+        <column name="update_ts"    type="integer"  required="true" defaultValue="0" />
 
         <!-- The current state of the object, whether it's in progress, done or dead -->
         <column name="state"        type="enum"     required="true" valueSet="in_progress,done,dead" defaultValue="in_progress" />
