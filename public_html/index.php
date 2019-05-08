@@ -133,7 +133,7 @@ require_once(__DIR__ . '/../backend/config.php');
             $raw_custom_data = $customData->getData();
             $json_custom = json_decode($raw_custom_data);
             if (isset($json_custom->coverage)) {
-                echo '<td>' . $json_custom->coverage . '</td>';
+                echo '<td>' . round((float)$json_custom->coverage * 100 ) . '%' . '</td>';
             } else {
                 echo '<td>-</td>';
             }
