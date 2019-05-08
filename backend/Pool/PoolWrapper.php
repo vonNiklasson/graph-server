@@ -29,6 +29,15 @@ class PoolWrapper {
      * @throws \Propel\Runtime\Exception\PropelException
      */
     public static function GetNewThread(string $workerName = null) {
+        # If there's no pools left to run, start a new one
+        if ($pools = PoolQuery::create()->getActive()->count() == 0) {
+            $newPool = PoolQuery::create()->getDisabledActive()->orderByNodeCount()->orderByCurrentCount()->findOne();
+            if (isset($newPool)) {
+                $newPool->setActive(true);
+                $newPool->save();
+            }
+        }
+
         // Get the active workers
         $pools = PoolQuery::create()->getActive()->orderByCurrentCount()->find();
 

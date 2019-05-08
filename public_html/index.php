@@ -48,7 +48,7 @@ require_once(__DIR__ . '/../backend/config.php');
 </div>
 
 <div class="container">
-    <h2>Static area</h2>
+    <h2>Static & dynamic area</h2>
     <table class="table table-striped table-hover table-sm">
         <thead class="thead-dark">
             <tr>
@@ -69,7 +69,7 @@ require_once(__DIR__ . '/../backend/config.php');
             foreach ($pools as $pool) {
                 if ($pool->getInProgressCount() > 0) {
                     echo '<tr class="table-primary">';
-                } elseif ($pool->getMaxCount() != 0 && $pool->getCompletedCount() < $pool->getMaxCount()) {
+                } elseif ($pool->getMaxCount() != 0 && $pool->getCompletedCount() == $pool->getMaxCount()) {
                     echo '<tr class="table-success">';
                 } else {
                     echo '<tr>';

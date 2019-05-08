@@ -29,6 +29,9 @@ class PoolQuery extends BasePoolQuery
 
     public function getActive() {
         return parent::where('active = 1 and (completed_count+in_progress_count < max_count or max_count = 0)');
+    }
 
+    public function getDisabledActive() {
+        return parent::where('active = 0 and (completed_count+in_progress_count < max_count or max_count = 0)');
     }
 }
