@@ -190,7 +190,7 @@ class PoolWrapper {
             $worker->setVirtualColumn('CustomData', $worker->getCustomData(true));
             $worker->setVirtualColumn('Eccentricities', $worker->getEccentricityData(true));
 
-            #$worker->setUpdateTs(time());
+            $worker->setUpdateTs(time());
             $worker->save();
 
             return $worker;

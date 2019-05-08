@@ -23,7 +23,6 @@ class Worker extends BaseWorker
     public function setPool(ChildPool $v = null) {
         $this->setNodeCount($v->getNodeCount());
         $this->setOptimization($v->getOptimization());
-        $this->setUpdateTs(time());
 
         return parent::setPool($v);
     }
@@ -42,8 +41,6 @@ class Worker extends BaseWorker
                 $this->setClosedTs(null);
             }
         }
-
-        $this->setUpdateTs(time());
 
         return parent::preUpdate($con);
     }
