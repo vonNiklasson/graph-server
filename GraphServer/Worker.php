@@ -23,6 +23,7 @@ class Worker extends BaseWorker
     public function setPool(ChildPool $v = null) {
         $this->setNodeCount($v->getNodeCount());
         $this->setOptimization($v->getOptimization());
+        $this->setUpdateTs(time());
 
         return parent::setPool($v);
     }
@@ -42,34 +43,97 @@ class Worker extends BaseWorker
             }
         }
 
+        $this->setUpdateTs(time());
+
         return parent::preUpdate($con);
     }
 
-    public function addNodeData($nodes) {
-        $wd = new WorkerData();
-        $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_NODES);
+    public function setNodeData($nodes) {
+        $wd = $this->getNodeData();
+        if (!isset($wd)) {
+            $wd = new WorkerData();
+            $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_NODES);
+            $wd->setWorker($this);
+        }
         $wd->setData($nodes);
-        $this->addData($wd);
+        $wd->save();
     }
 
-    public function addEdgeData($edges) {
-        $wd = new WorkerData();
-        $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_EDGES);
+    public function setEdgeData($edges) {
+        $wd = $this->getEdgeData();
+        if (!isset($wd)) {
+            $wd = new WorkerData();
+            $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_EDGES);
+            $wd->setWorker($this);
+        }
         $wd->setData($edges);
-        $this->addData($wd);
+        $wd->save();
     }
 
-    public function addEccentricityData($eccentricities) {
-        $wd = new WorkerData();
-        $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_ECCENTRICITIES);
+    public function setEccentricityData($eccentricities) {
+        $wd = $this->getEccentricityData();
+        if (!isset($wd)) {
+            $wd = new WorkerData();
+            $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_ECCENTRICITIES);
+            $wd->setWorker($this);
+        }
         $wd->setData($eccentricities);
-        $this->addData($wd);
+        $wd->save();
     }
 
-    public function addCustomData($extra_data) {
-        $wd = new WorkerData();
-        $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_CUSTOM);
+    public function setCustomData($extra_data) {
+        $wd = $this->getCustomData();
+        if (!isset($wd)) {
+            $wd = new WorkerData();
+            $wd->setDataType(WorkerDataTableMap::COL_DATA_TYPE_CUSTOM);
+            $wd->setWorker($this);
+        }
         $wd->setData($extra_data);
-        $this->addData($wd);
+        $wd->save();
+    }
+
+
+    public function getNodeData($str = false) {
+        $data = WorkerDataQuery::create()
+            ->filterByWorker($this)
+            ->filterByDataType(WorkerDataTableMap::COL_DATA_TYPE_NODES)
+            ->findOne();
+        if ($str) {
+            return (isset($data)) ? $data->getData() : '';
+        }
+        return $data;
+    }
+
+    public function getEdgeData($str = false) {
+        $data = WorkerDataQuery::create()
+            ->filterByWorker($this)
+            ->filterByDataType(WorkerDataTableMap::COL_DATA_TYPE_EDGES)
+            ->findOne();
+        if ($str) {
+            return (isset($data)) ? $data->getData() : '';
+        }
+        return $data;
+    }
+
+    public function getEccentricityData($str = false) {
+        $data = WorkerDataQuery::create()
+            ->filterByWorker($this)
+            ->filterByDataType(WorkerDataTableMap::COL_DATA_TYPE_ECCENTRICITIES)
+            ->findOne();
+        if ($str) {
+            return (isset($data)) ? $data->getData() : '';
+        }
+        return $data;
+    }
+
+    public function getCustomData($str = false) {
+        $data = WorkerDataQuery::create()
+            ->filterByWorker($this)
+            ->filterByDataType(WorkerDataTableMap::COL_DATA_TYPE_CUSTOM)
+            ->findOne();
+        if ($str) {
+            return (isset($data)) ? $data->getData() : '';
+        }
+        return $data;
     }
 }

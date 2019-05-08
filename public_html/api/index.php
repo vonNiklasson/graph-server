@@ -75,6 +75,22 @@ $app->get('/thread/{workerId}[/]', function(Request $request, Response $response
 })->setName('view-thread');
 
 
+/* Get worker id */
+$app->get('/thread/recalc[/]', function(Request $request, Response $response, array $args) {
+    $response = $response->withHeader('Content-type', 'application/json');
+
+    $worker = PoolWrapper::GetThreadForRecalculation();
+
+    if ($worker != null) {
+        $response = $response->withStatus(200);
+    } else {
+        $response = $response->withStatus(404);
+    }
+
+    return $response->withJson($worker->toArray());
+})->setName('get-recalculation-thread');
+
+
 /* Closing the old workers */
 $app->any('/workers/{workerName}/close[/]', function(Request $request, Response $response, array $args) {
     $response = $response->withHeader('Content-type', 'application/json');

@@ -4,11 +4,13 @@
 namespace Pool;
 
 use GraphServer\Map\PoolTableMap;
+use GraphServer\Map\WorkerDataTableMap;
 use GraphServer\Map\WorkerTableMap;
 use GraphServer\Pool;
 use GraphServer\PoolQuery;
 use GraphServer\Worker;
 use GraphServer\WorkerData;
+use GraphServer\WorkerDataQuery;
 use GraphServer\WorkerQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
@@ -82,19 +84,19 @@ class PoolWrapper {
 
 
         if (array_key_exists('Nodes', $body)) {
-            $worker->addNodeData(json_encode((object)$body['Nodes']));
+            $worker->setNodeData(json_encode((object)$body['Nodes']));
         }
 
         if (array_key_exists('Edges', $body)) {
-            $worker->addEdgeData(json_encode((object)$body['Edges']));
+            $worker->setEdgeData(json_encode((object)$body['Edges']));
         }
 
         if (array_key_exists('Eccentricities', $body)) {
-            $worker->addEccentricityData(json_encode((object)$body['Eccentricities']));
+            $worker->setEccentricityData(json_encode((object)$body['Eccentricities']));
         }
 
         if (array_key_exists('CustomData', $body)) {
-            $worker->addCustomData(json_encode((object)$body['CustomData']));
+            $worker->setCustomData(json_encode((object)$body['CustomData']));
         }
 
         if ($worker->getState() != WorkerTableMap::COL_STATE_DONE) {
@@ -155,5 +157,37 @@ class PoolWrapper {
             $pool->setDeadCount($pool->countWorkerss($c_dead));
             $pool->save();
         }
+    }
+
+    public static function GetThreadForRecalculation() {
+        $workerDatas = WorkerDataQuery::create()
+            ->filterByDataType(WorkerDataTableMap::COL_DATA_TYPE_CUSTOM)
+            ->filterByData('{}')->orderById()
+            ->find();
+
+        foreach ($workerDatas as $workerData) {
+            $workers = WorkerQuery::create()
+                ->filterByState(WorkerTableMap::COL_STATE_DONE)
+                ->filterById($workerData->getWorkerId())
+                ->filterByUpdateTs(time() - 600, CRITERIA::LESS_EQUAL)
+                ->find();
+            if ($workers->count() == 0) {
+                continue;
+            }
+
+            /** @var Worker $worker */
+            $worker = $workers->getFirst();
+            $pool = $worker->getPool();
+
+            $worker->setVirtualColumn('SolveType', $pool->getSolveType());
+            $worker->setVirtualColumn('ExtraData', $pool->getExtraData());
+
+            $worker->setVirtualColumn('NodeData', $worker->getNodeData(true));
+            $worker->setVirtualColumn('EdgeData', $worker->getEdgeData(true));
+
+            return $worker;
+        }
+
+        return null;
     }
 }
