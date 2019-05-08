@@ -40,14 +40,14 @@ require_once(__DIR__ . '/../backend/config.php');
 
         $workers_last_hour_6 = WorkerQuery::create()
             ->filterByState(WorkerTableMap::COL_STATE_DONE)
-            ->filterByClosedTs(time()-3600*24, Criteria::GREATER_EQUAL)
+            ->filterByClosedTs(time()-3600*6, Criteria::GREATER_EQUAL)
             ->count();
 
         ?>
       <p>
-          <strong><?= $workers_last_minute ?></strong> graphs during last minute<br />
-          <strong><?= $workers_last_hour ?></strong> graphs during the last hour<br />
-          <strong><?= $workers_last_hour_6 ?></strong> graphs during the six hours
+          <strong><?= $workers_last_minute ?></strong> graphs/minute<br />
+          <strong><?= $workers_last_hour ?></strong> graphs/hour<br />
+          <strong><?= $workers_last_hour_6 ?></strong> graphs/six hours
       </p>
     </div>
 </div>
