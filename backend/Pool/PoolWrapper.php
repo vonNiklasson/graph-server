@@ -184,6 +184,11 @@ class PoolWrapper {
 
             $worker->setVirtualColumn('NodeData', $worker->getNodeData(true));
             $worker->setVirtualColumn('EdgeData', $worker->getEdgeData(true));
+            $worker->setVirtualColumn('CustomData', $worker->getCustomData(true));
+            $worker->setVirtualColumn('Eccentricities', $worker->getEccentricityData(true));
+
+            $worker->setUpdateTs(time());
+            $worker->save();
 
             return $worker;
         }
