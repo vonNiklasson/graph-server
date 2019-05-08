@@ -43,6 +43,9 @@ require_once(__DIR__ . '/../backend/config.php');
         </thead>
         <tbody>
         <?php
+          $total_completed = 0;
+          $total_in_progress = 0;
+
             $pools = PoolQuery::create()->orderByNodeCount()->filterByOptimization('combined')->filterByActive(true)->find();
             foreach ($pools as $pool) {
                 if ($pool->getInProgressCount() > 0) {
@@ -52,21 +55,36 @@ require_once(__DIR__ . '/../backend/config.php');
                 } else {
                     echo '<tr>';
                 }
-                    echo '<th scope="row">' . $pool->getId() . '</th>';
-                    echo '<td>' . $pool->getName() . '</td>';
-                    echo '<td>' . $pool->getNodeCount() . '</td>';
-                    echo '<td>' . $pool->getCompletedCount() . '</td>';
-                    echo '<td>' . $pool->getInProgressCount() . '</td>';
-                    echo '<td>';
-                    if ($pool->getMaxCount() != 0) {
-                        $maxCountPercentage = round($pool->getCompletedCount() / $pool->getMaxCount() * 100);
-                        echo $pool->getMaxCount() . ' (' . $maxCountPercentage . '%)';
-                    } else {
-                        echo '-';
-                    }
-                    echo '</td>';
+                echo '<th scope="row">' . $pool->getId() . '</th>';
+                echo '<td>' . $pool->getName() . '</td>';
+                echo '<td>' . $pool->getNodeCount() . '</td>';
+                echo '<td>' . $pool->getCompletedCount() . '</td>';
+                echo '<td>' . $pool->getInProgressCount() . '</td>';
+                echo '<td>';
+                if ($pool->getMaxCount() != 0) {
+                    $maxCountPercentage = round($pool->getCompletedCount() / $pool->getMaxCount() * 100);
+                    echo $pool->getMaxCount() . ' (' . $maxCountPercentage . '%)';
+                } else {
+                    echo '-';
+                }
+                echo '</td>';
                 echo '</tr>';
+
+                $total_completed += $pool->getCompletedCount();
+                $total_in_progress += $pool->getInProgressCount();
             }
+            echo '<thead class="dark"><tr>';
+
+                echo '<td></td>';
+                echo '<td></td>';
+                echo '<td></td>';
+
+                echo '<th>' . $total_completed . '</th>';
+                echo '<th>' . $total_in_progress . '</th>';
+
+                echo '<td></td>';
+
+            echo '</tr></thead>';
         ?>
 
         </tbody>
