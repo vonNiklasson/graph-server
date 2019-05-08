@@ -165,6 +165,8 @@ class PoolWrapper {
             ->filterByData('{}')->orderById()
             ->find();
 
+        print_r($workerDatas);
+
         foreach ($workerDatas as $workerData) {
             $workers = WorkerQuery::create()
                 ->filterByState(WorkerTableMap::COL_STATE_DONE)

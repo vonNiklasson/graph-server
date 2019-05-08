@@ -66,11 +66,11 @@ $app->get('/thread/recalc[/]', function(Request $request, Response $response, ar
 
     if ($worker != null) {
         $response = $response->withStatus(200);
+        return $response->withJson($worker->toArray());
     } else {
         $response = $response->withStatus(404);
     }
 
-    return $response->withJson($worker->toArray());
 })->setName('get-recalculation-thread');
 
 
