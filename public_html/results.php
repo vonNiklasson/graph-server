@@ -169,9 +169,7 @@ function print_calc_obj($calc) {
 <table class="table table-striped table-hover table-sm">
     <thead class="thead-dark">
     <tr>
-        <th scope="col"></th>
-        <th scope="col"></th>
-        <th scope="col"></th>
+        <th scope="col" colspan="4"></th>
 
         <th scope="col" colspan="4">Edge count</th>
         <th scope="col" colspan="4">Convergence rate</th>
