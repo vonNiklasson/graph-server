@@ -101,6 +101,9 @@ foreach ($pools as $pool) {
         ->leftJoinWithData()
         ->find();
 
+    if ($workers->count() != $pool->getMaxCount())
+        continue;
+
     echo 'Calculating pool ' . $pool->getId() . ' with ' . $workers->count() . " results";
 
     foreach ($workers as $worker) {

@@ -138,6 +138,8 @@ function print_calc_obj($calc) {
             $raw_results = $pool->getResults();
             $results = json_decode($raw_results);
 
+            if (strlen($raw_results) == 0) continue;
+
             echo '<tr>';
                 echo '<th scope="row">' . $pool->getId() . '</th>';
                 echo '<td>' . $pool->getName() . '</td>';
@@ -264,6 +266,8 @@ function print_calc_obj($calc) {
     foreach ($pools as $pool) {
         $raw_results = $pool->getResults();
         $results = json_decode($raw_results);
+
+        if (strlen($raw_results) == 0) continue;
 
         echo '<tr>';
         echo '<th scope="row">' . $pool->getId() . '</th>';
