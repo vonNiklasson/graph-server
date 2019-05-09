@@ -40,9 +40,9 @@ function print_calc_obj($calc) {
 <table class="table table-striped table-hover table-sm">
     <thead class="thead-dark">
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Nodes</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
 
         <th scope="col" colspan="4">Edge count</th>
         <th scope="col" colspan="4">Convergence rate</th>
@@ -57,6 +57,72 @@ function print_calc_obj($calc) {
         <th scope="col" colspan="4">Units overlap (acc)</th>
         <th scope="col" colspan="4">Avg. detection speed</th>
         <th scope="col" colspan="4">Coverage</th>
+
+    </tr>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Nodes</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
 
     </tr>
     </thead>
@@ -103,9 +169,9 @@ function print_calc_obj($calc) {
 <table class="table table-striped table-hover table-sm">
     <thead class="thead-dark">
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Nodes</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
 
         <th scope="col" colspan="4">Edge count</th>
         <th scope="col" colspan="4">Convergence rate</th>
@@ -120,6 +186,72 @@ function print_calc_obj($calc) {
         <th scope="col" colspan="4">Units overlap (acc)</th>
         <th scope="col" colspan="4">Avg. detection speed</th>
         <th scope="col" colspan="4">Coverage</th>
+
+    </tr>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Nodes</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
+
+        <th scope="col">Min</th>
+        <th scope="col">Max</th>
+        <th scope="col">Avg.</th>
+        <th scope="col">Med.</th>
 
     </tr>
     </thead>
