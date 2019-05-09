@@ -9,6 +9,7 @@
 
         <column name="node_count"   type="integer"      required="true" />
         <column name="extra_data"   type="longvarchar"  required="false" />
+        <column name="results"      type="varchar"      required="false" />
 
         <column name="solve_type"   type="char"         required="true" defaultValue="random" size="31" />
 
