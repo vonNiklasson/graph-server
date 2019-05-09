@@ -65,7 +65,11 @@ require_once(__DIR__ . '/../backend/config.php');
           $total_completed = 0;
           $total_in_progress = 0;
 
-            $pools = PoolQuery::create()->orderByNodeCount()->filterByOptimization('combined')->filterByActive(true)->find();
+            $pools = PoolQuery::create()
+                ->orderBySolveType()
+                ->orderByNodeCount()
+                ->filterByOptimization('combined')
+                ->filterByActive(true)->find();
             foreach ($pools as $pool) {
                 if ($pool->getInProgressCount() > 0) {
                     echo '<tr class="table-primary">';
