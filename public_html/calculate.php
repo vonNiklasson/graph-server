@@ -105,6 +105,7 @@ foreach ($pools as $pool) {
         continue;
 
     echo 'Calculating pool ' . $pool->getId() . ' with ' . $workers->count() . " results";
+    flush();
 
     foreach ($workers as $worker) {
         $edge_count->add(       $worker->getEdgeCount());
@@ -153,5 +154,6 @@ foreach ($pools as $pool) {
     $pool->save();
 
     echo " - Done<br />\r\n";
+    flush();
 }
 ob_start();
