@@ -1,5 +1,7 @@
 <?php
 
+exit();
+
 use GraphServer\Map\WorkerTableMap;
 use GraphServer\PoolQuery;
 use GraphServer\WorkerQuery;
@@ -26,7 +28,7 @@ foreach ($pools as $oldPool) {
         ->filterByNodeCount($oldPool->getNodeCount())
         ->findOne();
 
-    echo 'Copying workers from pool ' . $oldPool->getId() . ' to ' . $newPool->getId() . ' with ' . $oldPool->getNodeCount() . " nodes<br />\r\n";
+    echo 'Copying workers from pool ' . $oldPool->getId() . ' to ' . $newPool->getId() . ' with ' . $oldPool->getNodeCount() . " nodes";
     flush();
 
     # Iterate over all the old workers
