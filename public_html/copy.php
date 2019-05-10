@@ -26,9 +26,7 @@ foreach ($pools as $oldPool) {
         ->filterByNodeCount($oldPool->getNodeCount())
         ->findOne();
 
-    print_r($newPool);
-
-    echo 'Copying workers from pool ' . $oldPool->getId() . ' to ' . $newPool->getId() . " results";
+    echo 'Copying workers from pool ' . $oldPool->getId() . ' to ' . $newPool->getId() . ' with ' . $oldPool->getNodeCount() . " nodes<br />\r\n";
     flush();
 
     continue;
