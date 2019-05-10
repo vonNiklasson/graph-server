@@ -29,7 +29,6 @@ foreach ($pools as $oldPool) {
     echo 'Copying workers from pool ' . $oldPool->getId() . ' to ' . $newPool->getId() . ' with ' . $oldPool->getNodeCount() . " nodes<br />\r\n";
     flush();
 
-    continue;
     # Iterate over all the old workers
     foreach ($oldWorkers as $oldWorker) {
         # Create a new worker from the old one
