@@ -77,10 +77,15 @@ class CalcObject {
 
 $pools = PoolQuery::create()
     ->filterByActive(true)
+    ->filterByResults(null)
     ->find();
 
 ob_end_flush();
 foreach ($pools as $pool) {
+    if ($pool->getMaxCount() != $pool->getCompletedCount()) {
+        continue;
+    }
+
     $edge_count = new CalcObject();
     $convergence_rate = new CalcObject();
     $edge_cost = new CalcObject();
