@@ -22,13 +22,16 @@ foreach ($pools as $oldPool) {
 
     # Get the new related pool
     $newPool = PoolQuery::create()
-        ->filterBySolveType('sfield_sr')
+        ->filterBySolveType('sfield_fr')
         ->filterByNodeCount($oldPool->getNodeCount())
         ->findOne();
+
+    print_r($newPool);
 
     echo 'Copying workers from pool ' . $oldPool->getId() . ' to ' . $newPool->getId() . " results";
     flush();
 
+    continue;
     # Iterate over all the old workers
     foreach ($oldWorkers as $oldWorker) {
         # Create a new worker from the old one
