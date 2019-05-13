@@ -107,7 +107,7 @@ require_once(__DIR__ . '/../backend/config.php');
                 echo '<th>' . $total_completed . '</th>';
                 echo '<th>' . $total_in_progress . '</th>';
                 $totalMaxCountPercentage = round($total_completed / $total_max_count * 100);
-                echo '<th>' . $total_max_count . ' (' . $totalMaxCountPercentage . ')</th>';
+                echo '<th>' . $total_max_count . ' (' . $totalMaxCountPercentage . '%)</th>';
 
             echo '</tr></thead>';
         ?>
